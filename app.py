@@ -9,7 +9,7 @@ import os
 # Download the model from Google Drive only if not already downloaded
 model_path = 'churn_model_compressed.joblib'
 if not os.path.exists(model_path):
-    url = 'https://drive.google.com/uc?id=1AbCxyzABC12345'
+    url = 'https://drive.google.com/uc?id=1cBzxnm0WTqsZKfrTc4ps0ndvvsIQwttr'
     gdown.download(url, model_path, quiet=False)
 
 # Now load the model
