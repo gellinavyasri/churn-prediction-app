@@ -3,10 +3,18 @@ import pandas as pd
 import numpy as np
 import joblib
 
-# Load the trained pipeline
-import cloudpickle
-with open('model.pkl', 'rb') as f:
-    model = cloudpickle.load(f)
+import gdown
+import os
+
+# Download the model from Google Drive only if not already downloaded
+model_path = 'churn_model_compressed.joblib'
+if not os.path.exists(model_path):
+    url = 'https://drive.google.com/uc?id=1AbCxyzABC12345'
+    gdown.download(url, model_path, quiet=False)
+
+# Now load the model
+import joblib
+model = joblib.load(model_path)
 
 st.title("Customer Churn Prediction")
 st.write("""
