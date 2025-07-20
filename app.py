@@ -3,8 +3,14 @@ import pandas as pd
 import numpy as np
 import joblib
 
-# Load model
-model = joblib.load('churn_model_compressed__.joblib')
+# Define a dummy fallback class if needed by joblib
+class Dummy:
+    def __init__(*args, **kwargs): pass
+
+
+
+model = 'churn_model_compressed__.joblib'
+
 
 st.title("Customer Churn Prediction")
 st.write("""
