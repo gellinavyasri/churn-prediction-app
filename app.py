@@ -8,10 +8,14 @@ class Dummy:
     def __init__(*args, **kwargs): pass
 
 # Fix for loading custom class-based models
+import cloudpickle
+
 def custom_joblib_load(filename):
-    import sys
-    sys.modules['custom_module'] = Dummy  # replace 'custom_module' with actual module name if known
-    return joblib.load(filename)
+    with open(filename, 'rb') as f:
+        return cloudpickle.load(f)
+
+model = custom_joblib_load('churn_model_compressed (2).joblib')
+
 
 model = custom_joblib_load('churn_model_compressed (2).joblib')
 
