@@ -1,45 +1,45 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import joblib
 
-# Load model
+# Load the trained pipeline
 model = joblib.load('churn_model_compressed.joblib')
 
-# Streamlit UI
-st.title("📊 Customer Churn Prediction App")
-st.markdown("Enter Customer Details 👇")
+st.title("Customer Churn Prediction")
+st.write("""
+This app predicts whether a customer is likely to churn or not.
 
-# Input fields
-gender = st.selectbox("Gender", ["Male", "Female"])
-age = st.slider("Age", 18, 100, 30)
-tenure = st.slider("Tenure (in months)", 0, 72, 12)
-usage_freq = st.slider("Usage Frequency (times/month)", 0, 30, 10)
-support_calls = st.slider("Support Calls", 0, 20, 5)
-payment_delay = st.slider("Payment Delay (days)", 0, 30, 5)
-subscription_type = st.selectbox("Subscription Type", ["Basic", "Standard", "Premium"])
-contract_length = st.selectbox("Contract Length", ["Monthly", "Quarterly", "Annual"])
-total_spend = st.number_input("Total Spend ($)", 0.0, 5000.0, 100.0)
-last_interaction = st.slider("Last Interaction (days ago)", 0, 30, 10)
+👉 **Please enter the details below:**
+""")
 
-# Create input DataFrame
-input_data = pd.DataFrame({
-    'Age': [age],
-    'Gender': [gender],
-    'Tenure': [tenure],
-    'Usage Frequency': [usage_freq],
-    'Support Calls': [support_calls],
-    'Payment Delay': [payment_delay],
-    'Subscription Type': [subscription_type],
-    'Contract Length': [contract_length],
-    'Total Spend': [total_spend],
-    'Last Interaction': [last_interaction]
-})
+# Example user input form — You can adjust based on your actual features
+tenure = st.number_input('Tenure (in months)', min_value=0, max_value=100)
+monthly_charges = st.number_input('Monthly Charges', min_value=0.0, max_value=500.0)
+total_charges = st.number_input('Total Charges', min_value=0.0, max_value=10000.0)
+contract = st.selectbox('Contract Type', ['Month-to-month', 'One year', 'Two year'])
+internet_service = st.selectbox('Internet Service', ['DSL', 'Fiber optic', 'No'])
+payment_method = st.selectbox('Payment Method', ['Electronic check', 'Mailed check', 'Bank transfer', 'Credit card'])
 
-# Predict
-if st.button("Predict Churn"):
-    prediction = model.predict(input_data)[0]
-    prob = model.predict_proba(input_data)[0][1]
-    
-    st.write("### 🔍 Prediction Result:")
-    st.success("Customer is likely to churn." if prediction == 1 else "Customer is likely to stay.")
-    st.write(f"📈 Churn Probability: **{prob:.2f}**")
+# Add other required inputs as per your model's features...
+
+if st.button('Predict'):
+    # Create a DataFrame with one row
+    input_data = pd.DataFrame({
+        'Tenure': [tenure],
+        'MonthlyCharges': [monthly_charges],
+        'TotalCharges': [total_charges],
+        'Contract': [contract],
+        'InternetService': [internet_service],
+        'PaymentMethod': [payment_method],
+        # Add all other required columns here...
+    })
+
+    # Predict
+    prediction = model.predict(input_data)
+    prediction_proba = model.predict_proba(input_data)
+
+    if prediction[0] == 1:
+        st.error(f"⚠️ The customer is likely to **churn**. (Confidence: {prediction_proba[0][1]:.2f})")
+    else:
+        st.success(f"✅ The customer is **not likely to churn**. (Confidence: {prediction_proba[0][0]:.2f})")
