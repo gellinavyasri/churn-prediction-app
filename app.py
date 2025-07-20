@@ -14,10 +14,8 @@ def custom_joblib_load(filename):
     with open(filename, 'rb') as f:
         return cloudpickle.load(f)
 
-model = custom_joblib_load('churn_model_compressed (2).joblib')
+model = custom_joblib_load('churn_model_compressed__.joblib')
 
-
-model = custom_joblib_load('churn_model_compressed (2).joblib')
 
 st.title("Customer Churn Prediction")
 st.write("""
