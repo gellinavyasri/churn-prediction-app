@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import joblib
 
-model = joblib.load('churn_model_compressed.joblib')
+model = joblib.load('churn_model_compressed (2).joblib')
 
 st.title("Customer Churn Prediction")
 st.write("""
