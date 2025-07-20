@@ -7,14 +7,9 @@ import joblib
 class Dummy:
     def __init__(*args, **kwargs): pass
 
-# Fix for loading custom class-based models
-import cloudpickle
 
-def custom_joblib_load(filename):
-    with open(filename, 'rb') as f:
-        return cloudpickle.load(f)
 
-model = custom_joblib_load('churn_model_compressed__.joblib')
+model = 'churn_model_compressed__.joblib'
 
 
 st.title("Customer Churn Prediction")
