@@ -4,7 +4,9 @@ import numpy as np
 import joblib
 
 # Load the trained pipeline
-model = joblib.load('churn_model_compressed.joblib')
+import cloudpickle
+with open('model.pkl', 'rb') as f:
+    model = cloudpickle.load(f)
 
 st.title("Customer Churn Prediction")
 st.write("""
