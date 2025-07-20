@@ -9,7 +9,9 @@ class Dummy:
 
 
 
-model = 'churn_model_compressed__.joblib'
+# Load the model
+model = joblib.load('churn_model_compressed__.joblib')
+
 
 
 st.title("Customer Churn Prediction")
