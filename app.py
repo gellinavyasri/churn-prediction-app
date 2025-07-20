@@ -10,7 +10,7 @@ class Dummy:
 
 
 # Load the model
-model = joblib.load('churn_model_compressed__.joblib')
+model = 'churn_model_compressed__.joblib'
 
 
 
